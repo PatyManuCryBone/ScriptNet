@@ -19,3 +19,8 @@ Key Features:
 2. Multiple Interactive Menus: Organized into intuitive submenus for Nmap scans, DoS testing, Wi-Fi management (Aircrack-ng), payload generation (MsfVenom), and metadata analysis.
 3. Network Service Management: Quick control over interfaces, NetworkManager, and Tor routing.
 4. Dynamic & Custom Prompt: A clean terminal user interface featuring a rotating dynamic prompt (ScriptNetwork, SN, SNPython), ANSI color coding, and full English language support.
+
+
+
+
+### This tool was created exclusively for educational and research purposes, and for testing in isolated lab environments or on systems you own (e.g., virtual environments like Metasploitable or DVWA). The author disclaims all liability for any illicit or improper use of the software. Performing tests on systems belonging to others without explicit authorization is illegal. ###
