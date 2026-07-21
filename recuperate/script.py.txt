@@ -1,0 +1,324 @@
+import os
+
+def clear_screen():
+    os.system("clear")
+
+def introduction():
+    print ("""                _______ 
+               |                                        |\      |
+               |                                        | \     |
+               |______    _____   ____      ____ _____  |  \    |  ____ _____             ____   ____
+                      |  |       | ___| |  |____|  |    |   \   | |       |   \        / |    | | ___| | / 
+                      |  |       | \    |  |       |    |    \  | |--     |    \  /\  /  | |  | | \    |/ 
+               _______|  |_____  |  \   |  |       |    |     \ | |____   |     \/  \/   |____| |  \   | \  
+    """)
+           
+    print("=======================================================")
+    print("Benvenuto in questo scan di rete!")
+    print("Usare questo strumento solo per test educativi!")
+    print("======================================================\n")
+    input("Premi invio per proseguire...")
+
+def install_dependencies():
+    print("Aggiornamento pacchetti di sistema...")
+    os.system("sudo apt update")
+
+    tools = [
+        "nmap", "wireshark", "airgeddon", "wifite", "ettercap", 
+        "metasploit-framework", "speedtest-cli", "whatweb", "python3-pip", "bettercap", "neofetch"
+    ]
+    
+    for tool in tools:
+        print(f"Installazione di {tool}...")
+        os.system(f"sudo apt install {tool} -y")
+
+def get_target():
+    return input("Inserisci l'IP/Dominio: ")
+
+def menu():
+    blue = "\033[34m"
+    yellow = "\033[33m"
+    reset = "\033[0m"
+    violet = "\033[35m"
+    skyblue = "\033[36m"
+    violetscure = "\033[31m"
+    
+    print(f"\n{violet}Scegli un'opzione:")
+    print(f"{yellow}00) What is my IP public?")
+    print(f"{yellow}01) What is my IP private?")
+    print(f"{yellow}02) Start NetworkManager")
+    print(f"{yellow}03) Restart NetworkManager")
+    print(f"{yellow}04) Stop NetworkManager")
+    print(f"{yellow}05) View directory")
+    print(f"{yellow}06) Install dependence")
+    print(f"{yellow}07) SpeedTest")
+    print(f"{yellow}08) Update && Upgrade")
+    print(f"{reset}----------------------------------")
+    print(f"{yellow}aa) Open Menu (attack tools)")
+    print(f"{yellow}bb) Open menu scan")
+    print(f"{yellow}cc) Open menu metadata")
+    print(f"{yellow}dd) Open menu MsfVenom")
+    print(f"{yellow}ee) Create Trojan")
+    print(f"{yellow}ff) Open menu aircrack-ng")
+    print(f"{reset}----------------------------------")
+    print(f"{yellow}1) Traceroute")
+    print(f"{yellow}2) Ping")
+    print(f"{yellow}3) Whois")
+    print(f"{yellow}4) Cambia IP/Dominio")
+    print(f"{yellow}5) Neofetch")
+    print(f"{reset}----------------------------------")
+    print(f"{reset}0){violetscure} Esci dall'app")
+    return input(f"\n{skyblue}Scelta: {skyblue}")
+
+def aircrack_menu():
+    interface = select_interface()
+
+    while True:
+        clear_screen()
+        print("\n--- Menu Aircrack-ng ---")
+        print("1) Mettere l'interfaccia in modalità monitor")
+        print("2) Avviare Airodump-ng")
+        print("3) Avviare Aireplay-ng (Deauth Attack)")
+        print("4) Crack WPA/WPA2 con Aircrack-ng")
+        print("0) Torna indietro")
+        
+        scelta = input("\nScelta: ")
+
+        if scelta == "1":
+            os.system(f"sudo ip link set {interface} down")
+            os.system(f"sudo iw dev {interface} set type monitor")
+            os.system(f"sudo ip link set {interface} up")
+            print(f"\nInterfaccia {interface} ora in modalità monitor!")
+
+        elif scelta == "2":
+            os.system(f"sudo airodump-ng {interface}")
+
+        elif scelta == "3":
+            target_bssid = input("Inserisci il BSSID del target: ")
+            target_channel = input("Inserisci il canale del target: ")
+            os.system(f"sudo airodump-ng --bssid {target_bssid} -c {target_channel} {interface}")
+
+        elif scelta == "4":
+            cap_file = input("Inserisci il percorso del file .cap: ")
+            wordlist = input("Inserisci il percorso della wordlist(ScriptNetwork/wordlists/rockyou.txt): ")
+            os.system(f"sudo aircrack-ng -w {wordlist} -b {target_bssid} {cap_file}")
+
+        elif scelta == "0":
+            break
+
+        else:
+            print("Scelta non valida!")
+
+        input("\nPremi Invio per continuare...")
+
+def select_interface():
+    os.system("ip link show")
+    return input("\nInserisci il nome della tue interfaccia di rete (es. wlan0): ")
+
+def sub(target):
+    while True:
+        print(f"\n{reset}--- Sotto-Menu Open ---")
+        reset = "\033[0m"
+        yellow = "\033[33m"
+        print(f"{yellow}1) Generate payload msfvenom")
+        print(f"{yellow}2) MyDirectory")
+        print(f"{yellow}3) Clear screen")
+        print(f"{yellow}0) Back")
+
+        scelta = input("\nScelta: ")
+
+        if scelta == "3":
+           os.system(f"clear")
+        if scelta == "2":
+           os.system(f"pwd && ls")
+        if scelta == "1":
+           os.system(f"cd payload && bash .meta.sh")
+        elif scelta == "0":
+            break
+
+def subb(target):
+    while True:
+        yellow = "\033[33m"
+        print(f"{yellow}1) Attacker: ")
+        print(f"{yellow}2) Victim: ")
+        print(f"{yellow}3) Execute attacck")
+        print(f"{yellow}4) MyDirectory")
+        print(f"{yellow}5) Clear Screen")
+        print(f"0) Back")
+        
+        scelta = input("\nScelta: ")
+
+        if scelta == "5":
+           os.system(f"clear")
+        if scelta == "4":
+           os.system(f"ls && pwd")
+        if scelta == "3":
+           os.system(f"cd .recuperate && python3 attacco.py")
+        if scelta == "1":
+           os.system(f"cat .recuperate/attacco.txt")
+        if scelta == "2":
+           os.system(f"cat .recuperate/vittima.txt")
+        elif scelta == "0":
+            break
+
+    
+def submenu(target):
+    while True: 
+        yellow = "\033[33m"
+        print(f"{yellow}1) Metadata")
+        print(f"2) MyDirectory")
+        print(f"3) Gps-Info Metadata")
+        print(f"4) Clear screen ")
+        print(f"0) Back")
+        
+        scelta = input("\nScelta: ")
+
+        if scelta == "4":
+           os.system(f"clear")
+        if scelta == "3":
+           os.system(f"cd .recuperate && sudo python3 GPS_info.py")
+        if scelta == "2":
+           os.system(f"ls && pwd")
+        if scelta == "1":
+           os.system(f"cd .recuperate && sudo python3 meta.py")
+        elif scelta == "0":
+            break
+        
+
+def submenu2open(target):
+    while True:
+        clear_screen()
+        yellow = "\033[33m"
+        print("\n--- Sotto-Menu Open ---")
+        print(f"{yellow}1) Search vulnerability")
+        print(f"2) Search open port")
+        print(f"3) Search operating system")
+        print(f"4) Scan TCP")
+        print(f"5) Aggressive Scan")
+        print(f"6) Scan UDP")
+        
+        print(f"0) Back")
+        
+        scelta = input("\nScelta: ")
+
+        if scelta == "6":
+           os.system(f"nmap -Pn -sU {target}")
+        if scelta == "5":
+           os.system(f"nmap -Pn -A {target}")
+        if scelta == "4":
+           os.system(f"nmap -Pn -sT {target}")
+        if scelta == "1":
+           os.system(f"nmap -Pn -sV --script=vuln -T4 --min-rate=50 {target}")
+        if scelta == "2":
+           os.system(f"nmap -Pn {target}")
+        if scelta == "3":
+           os.system(f"nmap -Pn -O {target}")
+        elif scelta == "0":
+           break
+        else:
+            print("Scelta non valida!")
+
+        input("\nPremi Invio per continuare...")
+         
+def submenu_open(target):
+    while True:
+        clear_screen()
+        yellow = "\033[33m"
+        print("\n--- Sotto-Menu Open ---")
+        print(f"{yellow}1) Open Airgeddon")
+        print("2) Open Wifite")
+        print("3) Open Wireshark")
+        print("4) Open MetaSploit-Framework")
+        print("5) Open Bettercap")
+        print("6) Open Maltego")
+        print("7) Open ZPhisher")
+        print("8) Open Xterm")
+        print("0) Back")
+
+        scelta = input("\nScelta: ")
+
+        if scelta == "8":
+            os.system("xterm -e &")
+        if scelta == "7":
+            os.system("cd .recuperate/zphisher && bash zphisher.sh")
+        if scelta == "6":
+            os.system("xterm -e 'maltego' &")
+        if scelta == "1":
+            os.system("xterm -fa 'Monospace' -fs 12 -e 'airgeddon' &")
+        elif scelta == "2":
+            os.system("xterm -fa 'Monospace' -fs 12 -e 'wifite' &")
+        elif scelta == "3":
+            os.system("xterm -e 'wireshark' &")
+        elif scelta == "4":
+            os.system("xterm -fa 'Monospace' -fs 12 -e 'msfconsole' &")
+        elif scelta == "5":
+            os.system("xterm -fa 'Monospace' -fs 12 -e 'bettercap' &")
+        elif scelta == "0":
+            break
+        else:
+            print("Scelta non valida!")
+        
+        input("\nPremi Invio per continuare...")
+
+def main():
+    clear_screen()
+    introduction()
+    clear_screen()
+        
+    target = get_target()
+
+    while True:
+        clear_screen()
+        print(f"Target attuale: {target}")
+        choice = menu()
+
+        if choice == "ff":
+            aircrack_menu()
+        if choice == "ee":
+            subb(target)
+        if choice == "dd":
+            sub(target)
+        if choice == "cc":
+            submenu(target)
+        if choice == "bb":
+            submenu2open(target)
+        if choice == "5":
+            os.system("neofetch")
+        if choice == "00":
+            os.system("curl ifconfig.me")
+        if choice == "08":
+            os.system("apt-get update && apt-get upgrade")
+        if choice == "01":
+            os.system("ip a")
+        elif choice == "05":
+            os.system("pwd && ls")
+        elif choice == "02":
+            os.system("systemctl start NetworkManager")
+        elif choice == "03":
+            os.system("systemctl restart NetworkManager")
+        elif choice == "04":
+            os.system("systemctl stop NetworkManager")
+        elif choice == "06":
+            install_dependencies()
+        elif choice == "3":
+            os.system(f"whois {target}")
+        elif choice == "07":
+            os.system("speedtest-cli")
+        elif choice == "2":
+            os.system(f"ping -c 4 {target}")
+        elif choice == "1":
+            os.system(f"traceroute {target}")
+        elif choice == "4":
+            target = get_target()
+        elif choice == "aa":
+            submenu_open(target)  # 🔥 Chiama il sotto-menu!
+        elif choice == "0":
+            print("Uscita dall'app...")
+            break
+        else:
+            print("Scelta non valida!")
+
+        input("\nPremi Invio per tornare al menu...")
+
+if __name__ == "__main__":
+    main()

