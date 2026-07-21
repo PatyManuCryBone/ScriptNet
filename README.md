@@ -23,4 +23,4 @@ Key Features:
 
 
 
-### This tool was created exclusively for educational and research purposes, and for testing in isolated lab environments or on systems you own (e.g., virtual environments like Metasploitable or DVWA). The author disclaims all liability for any illicit or improper use of the software. Performing tests on systems belonging to others without explicit authorization is illegal. ###
+### This tool was created exclusively for educational and research purposes, and for testing in isolated lab environments or on systems you own. The author disclaims all liability for any illicit or improper use of the software. Performing tests on systems belonging to others without explicit authorization is illegal. ###
